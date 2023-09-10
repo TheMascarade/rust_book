@@ -4,17 +4,20 @@ use std::io;
 
 fn main() {
     let secret_number = rand::thread_rng().gen_range(1..=10);
-    let tries = 1..=3;
+    let tries = 1..=5;
     let end = *tries.end();
     let mut guess = get_user_number(get_user_input());
     for _count in tries {
+        println!("You have {} tries left", end - _count);
         match guess.cmp(&secret_number) {
             Ordering::Less => println!("Its higher"),
-            Ordering::Equal => println!("You guessed right!"),
+            Ordering::Equal => {
+                println!("You guessed right!");
+                break;
+            }
             Ordering::Greater => println!("Its lower"),
         }
         guess = get_user_number(get_user_input());
-        println!("You have {} tries left", end - _count);
     }
 }
 
