@@ -2,29 +2,53 @@ use rand::Rng;
 use std::cmp::Ordering;
 use std::io;
 
+enum MessageType {
+    Warning,
+    Info,
+}
+
 fn main() {
     let secret_number = rand::thread_rng().gen_range(1..=10);
     let tries = 1..=5;
     let end = *tries.end();
-    let mut guess = get_user_number(get_user_input());
     for _count in tries {
-        println!("You have {} tries left", end - _count);
+        let guess = get_user_number(get_user_input());
+        let left = end - _count;
+        pretify_message(
+            format!("You have {left} tries left").as_str(),
+            MessageType::Info,
+        );
         match guess.cmp(&secret_number) {
-            Ordering::Less => println!("Its higher"),
+            Ordering::Less => pretify_message("Its higher", MessageType::Warning),
             Ordering::Equal => {
-                println!("You guessed right!");
+                pretify_message("You guessed right!", MessageType::Info);
                 break;
             }
-            Ordering::Greater => println!("Its lower"),
+            Ordering::Greater => pretify_message("Its lower", MessageType::Warning),
         }
-        guess = get_user_number(get_user_input());
+    }
+    pretify_message("You loose!", MessageType::Warning)
+}
+
+fn pretify_message(msg: &str, msg_type: MessageType) {
+    match msg_type {
+        MessageType::Warning => {
+            println!("^^^^^^^^^^^^^^^^^^^^^");
+            println!("{}", msg);
+            println!("^^^^^^^^^^^^^^^^^^^^^");
+        }
+        MessageType::Info => {
+            println!("---------------------");
+            println!("{}", msg);
+            println!("---------------------");
+        }
     }
 }
 
 fn get_user_input() -> String {
     let mut number = String::new();
     loop {
-        println!("Please enter a number");
+        pretify_message("Please enter a number", MessageType::Info);
         match io::stdin().read_line(&mut number) {
             Result::Ok(_) => return number,
             Result::Err(_) => {
