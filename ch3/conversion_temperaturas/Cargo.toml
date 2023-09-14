@@ -1,5 +1,5 @@
 [package]
-name = "conversion_temperaturas"
+name = "tempcv"
 version = "0.1.0"
 edition = "2021"
 
