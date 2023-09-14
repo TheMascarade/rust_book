@@ -1,12 +1,19 @@
 use clap::{Parser, ValueEnum};
 
+#[derive(Parser)]
 #[command(name = "tempcv")]
-#[command(author = "Matias Bella")]
+#[command(author = "Matias Bella <dummy@gmail.com>")]
 #[command(version = "1.0")]
 #[command(about = "Aplicacion para convertir entre unidades de temperatura")]
+#[command(help_template = "\
+{before-help}{name} {version}
+{author-with-newline}{about-with-newline}
+{usage-heading} {usage}
+
+{all-args}{after-help}
+")]
 
 /// Convertur de unidades de temperatura escrito en Rust
-#[derive(Parser)]
 struct Temp {
     /// El valor de la medicion
     #[arg(short = 'd', long)]
