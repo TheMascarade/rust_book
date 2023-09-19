@@ -20,11 +20,11 @@ trait ShapeOps {
 
 #[derive(Subcommand)]
 enum Shapes {
-    /// Circle
+    /// Circle shape
     Circle(Circle),
-    /// Rectangle
+    /// Rectangle shape
     Rectangle(Rectangle),
-    /// Triangle
+    /// Triangle shape
     Triangle(Triangle),
 }
 
